@@ -6,7 +6,7 @@ const equalsButton = document.querySelector(".equals");
 const expression = document.querySelector(".expression");
 const currentNumber = document.querySelector(".current_number");
 let operation;
-let previousNumber;
+let result;
 
 function addToNumber(number) {
     if (number === "." && currentNumber.innerText.includes("."))
@@ -25,6 +25,7 @@ numbers.forEach((number) => {
 
 function clearScreen() {
     currentNumber.innerText = "";
+    expression.innerText = "";
 }
 
 clearButton.addEventListener("click", () => {
@@ -32,13 +33,16 @@ clearButton.addEventListener("click", () => {
 });
 
 function chooseOperation(operator) {
-    if (currentNumber.innerText === "")
+    if (currentNumber.innerText === "" && operator !== "-")
         return;
-    previousNumber = currentNumber.innerText;
-    console.log(previousNumber);
+    else if (currentNumber.innerText === "" && operator === "-") {
+        currentNumber.innerText += operator;
+        return;
+    }
+    expression.innerText = currentNumber.innerText;
     operation = operator;
-    console.log(operation);
-    clearScreen();
+    expression.innerText += operator;
+    currentNumber.innerText = "";
 }
 
 operations.forEach( operator => {
@@ -48,27 +52,28 @@ operations.forEach( operator => {
 });
 
 function calculateExpression() {
-    let numberOne = parseFloat(previousNumber);
+    let numberOne = parseFloat(expression.innerText);
     let numberTwo = parseFloat(currentNumber.innerText);
+    expression.innerText += currentNumber.innerText;
     if (isNaN(numberOne) || isNaN(numberTwo))
         return;
     switch (operation) {
         case "+":
-            previousNumber = numberOne + numberTwo;
+            result = numberOne + numberTwo;
             break;
         case "-":
-            previousNumber = numberOne - numberTwo;
+            result = numberOne - numberTwo;
             break;
         case "*":
-            previousNumber = numberOne * numberTwo;
+            result = numberOne * numberTwo;
             break;
         case "/":
-            previousNumber = numberOne / numberTwo;
+            result = numberOne / numberTwo;
             break;
         default:
             break;
     }
-    currentNumber.innerText = previousNumber;
+    currentNumber.innerText = result;
 }
 
 equalsButton.addEventListener("click", () => {
