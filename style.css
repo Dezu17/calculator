@@ -34,13 +34,24 @@ body {
     grid-row: 0 / 1;
     grid-column: span 4;
     width: 19rem;
-    height: 4rem;
-    border: 2px solid black;
-    border-radius: 10px;
+    min-height: 4rem;
     text-align: end;
-    font-size: 2rem;
     color: white;
     padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+}
+.current_number, .expression {
+    border-radius: 10px;
+}
+.expression {
+    height: 2rem;
+    font-size: 1.5rem;
+    color:rgb(145, 189, 255);
+}
+.current_number {
+    height: 3rem;
+    font-size: 2.2rem;
 }
 button {
     height: 4rem;

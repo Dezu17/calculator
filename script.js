@@ -3,15 +3,16 @@ const clearButton = document.querySelector(".cancel");
 const deleteButton = document.querySelector(".delete");
 const operations = document.querySelectorAll(".operation");
 const equalsButton = document.querySelector(".equals");
-const output = document.querySelector(".output");
+const expression = document.querySelector(".expression");
+const currentNumber = document.querySelector(".current_number");
 let operation;
 let previousNumber;
 
 function addToNumber(number) {
-    if (number === "." && output.innerText.includes("."))
+    if (number === "." && currentNumber.innerText.includes("."))
         return;
     else {
-        output.innerText += number;
+        currentNumber.innerText += number;
         console.log(number + " was pressed");
     }
 }
@@ -23,7 +24,7 @@ numbers.forEach((number) => {
 });
 
 function clearScreen() {
-    output.innerText = "";
+    currentNumber.innerText = "";
 }
 
 clearButton.addEventListener("click", () => {
@@ -31,9 +32,9 @@ clearButton.addEventListener("click", () => {
 });
 
 function chooseOperation(operator) {
-    if (output.innerText === "")
+    if (currentNumber.innerText === "")
         return;
-    previousNumber = output.innerText;
+    previousNumber = currentNumber.innerText;
     console.log(previousNumber);
     operation = operator;
     console.log(operation);
@@ -48,7 +49,7 @@ operations.forEach( operator => {
 
 function calculateExpression() {
     let numberOne = parseFloat(previousNumber);
-    let numberTwo = parseFloat(output.innerText);
+    let numberTwo = parseFloat(currentNumber.innerText);
     if (isNaN(numberOne) || isNaN(numberTwo))
         return;
     switch (operation) {
@@ -67,9 +68,20 @@ function calculateExpression() {
         default:
             break;
     }
-    output.innerText = previousNumber;
+    currentNumber.innerText = previousNumber;
 }
 
 equalsButton.addEventListener("click", () => {
     calculateExpression();
+});
+
+function deleteLastDigit() {
+    if (currentNumber.innerText.length == 1 || currentNumber.innerText.length == 0)
+        currentNumber.innerText = "";
+    else
+        currentNumber.innerText = currentNumber.innerText.slice(0, currentNumber.innerText.length - 1);
+}
+
+deleteButton.addEventListener("click", () => {
+    deleteLastDigit();
 });
