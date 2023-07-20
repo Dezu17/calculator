@@ -10,18 +10,19 @@ body {
     height: 100vh;
     font-weight: 500;
     font-family: 'Space Mono', monospace;;
-    background-color: rgb(38, 57, 128);
+    background-color: rgb(119, 146, 244);
 }
 .calculator {
     display: grid;
     justify-content: center;
     align-items: center;
     align-content: space-evenly;
-    width: 450px;
+    min-width: 350px;
+    min-height: 550px;
     border-radius: 12px;
-    grid-template-rows: minmax(5rem, auto)
-                        repeat(5, 3rem);
-    grid-template-columns: repeat(4, 5rem);
+    grid-template-rows: minmax(4rem, auto)
+                        repeat(5, 4rem);
+    grid-template-columns: repeat(4, 4rem);
     gap: 1rem;
     padding: 1rem;
     background-color: rgb(33, 33, 44);
@@ -30,24 +31,31 @@ body {
     grid-column: span 2;
 }
 .output {
-        grid-row: 0 / 1;
-        grid-column: span 4;
-        width: 23rem;
-        height: 3rem;
-        border: 2px solid black;
-        border-radius: 10px;
+    grid-row: 0 / 1;
+    grid-column: span 4;
+    width: 19rem;
+    height: 4rem;
+    border: 2px solid black;
+    border-radius: 10px;
+    text-align: end;
+    font-size: 2rem;
+    color: white;
+    padding: 0.5rem;
 }
 button {
-    height: 3rem;
+    height: 4rem;
     border-radius: 10px;
     border: none;
     font-family: inherit;
     font-weight: inherit;
     font-size: 1.5rem;
     letter-spacing: 3px;
-    color: rgb(92, 154, 247);
+    color: rgb(145, 189, 255);
     background-color: rgb(77, 76, 97);
 }
 button:hover {
-    background-color: rgba(114, 113, 139, 0.5);
+    background-color: rgba(114, 113, 139, 0.7);
+}
+button:active {
+    background-color: rgba(114, 113, 139, 0.8);
 }
