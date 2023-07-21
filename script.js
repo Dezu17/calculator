@@ -9,6 +9,35 @@ let operation;
 let result;
 let equalsWasJustPressed;
 
+function isNumber(key) {
+    if ("0123456789.".includes(key))
+        return true;
+    return false;
+}
+
+function isOperator(key) {
+    if ("+-*/".includes(key))
+        return true;
+    return false;
+}
+
+function keyPressHandler(key) {
+    if (isNumber(key))
+        addToNumber(key);
+    else if (isOperator(key))
+        chooseOperation(key);
+    else if (key === "Enter" || key === "=")
+        calculateExpression();
+    else if (key === "Delete" || key === "Escape")
+        clearScreen();
+    else if (key === "Backspace")
+        deleteLastDigit();
+}
+
+document.addEventListener("keydown", event => {
+    keyPressHandler(event.key);
+});
+
 function addToNumber(number) {
     if (number === "." && currentNumber.innerText.includes("."))
         return;
