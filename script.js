@@ -7,11 +7,13 @@ const expression = document.querySelector(".expression");
 const currentNumber = document.querySelector(".current_number");
 let operation;
 let result;
+let equalsWasJustPressed;
 
 function addToNumber(number) {
     if (number === "." && currentNumber.innerText.includes("."))
         return;
     else {
+        equalsWasJustPressed = false;
         currentNumber.innerText += number;
         console.log(number + " was pressed");
     }
@@ -24,8 +26,10 @@ numbers.forEach((number) => {
 });
 
 function clearScreen() {
+    equalsWasJustPressed = false;
     currentNumber.innerText = "";
     expression.innerText = "";
+    operation = "";
 }
 
 clearButton.addEventListener("click", () => {
@@ -40,6 +44,7 @@ function isOperationSet() {
 }
 
 function chooseOperation(operator) {
+    equalsWasJustPressed = false;
     if (isOperationSet())
         calculateExpression();
     if (currentNumber.innerText === "" && operator !== "-")
@@ -61,29 +66,32 @@ operations.forEach( operator => {
 });
 
 function calculateExpression() {
-    let numberOne = parseFloat(expression.innerText.slice(0, -1));
-    let numberTwo = parseFloat(currentNumber.innerText);
-    expression.innerText += currentNumber.innerText;
-    if (isNaN(numberOne) || isNaN(numberTwo))
-        return;
-    switch (operation) {
-        case "+":
-            result = numberOne + numberTwo;
-            break;
-        case "-":
-            result = numberOne - numberTwo;
-            break;
-        case "*":
-            result = numberOne * numberTwo;
-            break;
-        case "/":
-            result = numberOne / numberTwo;
-            break;
-        default:
-            break;
+    if (!equalsWasJustPressed) {
+        equalsWasJustPressed = true;
+        let numberOne = parseFloat(expression.innerText.slice(0, -1));
+        let numberTwo = parseFloat(currentNumber.innerText);
+        expression.innerText += currentNumber.innerText;
+        if (isNaN(numberOne) || isNaN(numberTwo))
+            return;
+        switch (operation) {
+            case "+":
+                result = numberOne + numberTwo;
+                break;
+            case "-":
+                result = numberOne - numberTwo;
+                break;
+            case "*":
+                result = numberOne * numberTwo;
+                break;
+            case "/":
+                result = numberOne / numberTwo;
+                break;
+            default:
+                break;
+        }
+        currentNumber.innerText = result;
+        operation = "";
     }
-    currentNumber.innerText = result;
-    operation = "";
 }
 
 equalsButton.addEventListener("click", () => {
@@ -91,6 +99,7 @@ equalsButton.addEventListener("click", () => {
 });
 
 function deleteLastDigit() {
+    equalsWasJustPressed = false;
     if (currentNumber.innerText.length == 1 || currentNumber.innerText.length == 0)
         currentNumber.innerText = "";
     else
