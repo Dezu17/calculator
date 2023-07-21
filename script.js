@@ -32,7 +32,16 @@ clearButton.addEventListener("click", () => {
     clearScreen();
 });
 
+function isOperationSet() {
+    if (operation === "+" || operation === "-" || operation === "*" || operation === "/")
+        return true;
+    else
+        return false;
+}
+
 function chooseOperation(operator) {
+    if (isOperationSet())
+        calculateExpression();
     if (currentNumber.innerText === "" && operator !== "-")
         return;
     else if (currentNumber.innerText === "" && operator === "-") {
@@ -52,7 +61,7 @@ operations.forEach( operator => {
 });
 
 function calculateExpression() {
-    let numberOne = parseFloat(expression.innerText);
+    let numberOne = parseFloat(expression.innerText.slice(0, -1));
     let numberTwo = parseFloat(currentNumber.innerText);
     expression.innerText += currentNumber.innerText;
     if (isNaN(numberOne) || isNaN(numberTwo))
@@ -74,6 +83,7 @@ function calculateExpression() {
             break;
     }
     currentNumber.innerText = result;
+    operation = "";
 }
 
 equalsButton.addEventListener("click", () => {
